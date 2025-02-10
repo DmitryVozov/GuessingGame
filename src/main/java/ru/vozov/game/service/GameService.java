@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class GameService {
     final GameRepository gameRepository;
     final ImageRepository imageRepository;
-    int CURRENT_GAME_ID = 1;
+    int currentGameId = 1;
 
     final static int GAME_SIZE = 51;
 
@@ -33,15 +33,15 @@ public class GameService {
 
     @Transactional(readOnly = true)
     public List<String> getGameImages() {
-        CURRENT_GAME_ID = getRandomGameId();
+        currentGameId = getRandomGameId();
 
-        List<Image> images = imageRepository.findByGameId(CURRENT_GAME_ID);
+        List<Image> images = imageRepository.findByGameId(currentGameId);
 
         if (images.isEmpty()) {
             throw new ImagesNotFoundException(
                     String.format(
                             "Images for game with id %d not found",
-                            CURRENT_GAME_ID
+                            currentGameId
                     )
             );
         }
@@ -61,8 +61,8 @@ public class GameService {
 
     @Transactional(readOnly = true)
     public boolean submitGuess(String guess) {
-        Game currentGame = gameRepository.findById(CURRENT_GAME_ID)
-                .orElseThrow(() -> new GameNotFoundException(String.format("Game with id %d not found", CURRENT_GAME_ID)));
+        Game currentGame = gameRepository.findById(currentGameId)
+                .orElseThrow(() -> new GameNotFoundException(String.format("Game with id %d not found", currentGameId)));
         return currentGame.getName().equalsIgnoreCase(guess);
     }
 
