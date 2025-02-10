@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameService {
-    GameRepository gameRepository;
-    ImageRepository imageRepository;
+    final GameRepository gameRepository;
+    final ImageRepository imageRepository;
+    int CURRENT_GAME_ID = 1;
 
-    static int CURRENT_GAME_ID = 1;
-    static int GAME_SIZE = 51;
+    final static int GAME_SIZE = 51;
 
     @Autowired
     public GameService(GameRepository gameRepository, ImageRepository imageRepository) {
